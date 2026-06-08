@@ -1,0 +1,86 @@
+# SPMB Citra Negara — Cursor Rules
+
+## Tech Stack
+- Framework: Next.js 14 (App Router)
+- Language: TypeScript (strict mode)
+- Styling: Tailwind CSS v3
+- State: React useState / useReducer, TanStack Query untuk server state
+- Form: React Hook Form + Zod
+- HTTP: Axios
+- Icons: Lucide React
+
+## Code Quality Rules
+
+### Umum
+- Semua komponen wajib TypeScript dengan interface yang jelas
+- Tidak ada `any` type — gunakan interface atau union type yang spesifik
+- Tidak ada kode komentar yang berlebihan atau menyebut tools tertentu (Cursor, AI, dll)
+- Tidak ada console.log yang tertinggal di production code
+- Gunakan `const` untuk semua fungsi komponen: `const MyComponent = () => {}`
+- Import selalu diurutkan: React → Next → library → local
+- Setiap file komponen harus punya satu default export
+
+### Penamaan
+- Komponen: PascalCase (`UserCard`, `AdminSidebar`)
+- File komponen: PascalCase (`UserCard.tsx`)
+- Fungsi dan variabel: camelCase
+- Konstanta global: UPPER_SNAKE_CASE
+- CSS class: gunakan Tailwind utility class saja, tidak ada custom CSS inline
+
+### Struktur Komponen
+- Props interface wajib didefinisikan di atas komponen
+- Hooks dipanggil di bagian atas komponen (setelah interface)
+- Tidak ada logika bisnis di dalam JSX — ekstrak ke fungsi terpisah
+- Komponen yang lebih dari 150 baris harus dipecah
+
+### Keamanan
+- Tidak ada API key atau credential yang di-hardcode
+- Semua nilai sensitif dari `.env.local` via `process.env`
+- Validasi semua input form dengan Zod schema
+- Token autentikasi disimpan di httpOnly cookie, bukan localStorage
+- Semua request ke API wajib melewati interceptor di `lib/api.ts`
+
+### API & Data Fetching
+- Semua endpoint API didefinisikan sebagai konstanta di `lib/api.ts`
+- Gunakan TanStack Query untuk data yang perlu di-cache
+- Selalu handle loading state dan error state
+- Tidak ada fetch langsung di dalam komponen — gunakan custom hooks
+
+### Styling
+- Selalu gunakan token warna dari `tailwind.config.ts` (contoh: `text-primary-600`, bukan `text-green-700`)
+- Responsif mobile-first: mulai dari `sm:`, bukan override dari besar ke kecil
+- Komponen admin: layout sidebar (hidden di mobile)
+- Komponen user: layout mobile-first dengan bottom nav
+
+### Git Commit (jika pakai Git)
+- Format: `feat:`, `fix:`, `refactor:`, `style:`, `docs:`
+- Contoh: `feat: tambah halaman verifikasi berkas admin`
+- Tidak ada commit message dalam bahasa campuran (pilih satu: ID atau EN)
+
+## Hal yang Dilarang
+- ❌ Jangan gunakan `<style>` inline di komponen
+- ❌ Jangan gunakan `!important` di Tailwind
+- ❌ Jangan hardcode URL API — selalu dari `process.env.NEXT_PUBLIC_API_URL`
+- ❌ Jangan buat halaman tanpa loading dan error state
+- ❌ Jangan gunakan warna di luar palet yang sudah didefinisikan
+- ❌ Jangan tinggalkan kode yang dicomment tanpa alasan jelas
+
+## Contoh Komponen UI Standard
+
+### Button
+- variant: 'primary' | 'outline' | 'danger' | 'ghost'
+- Primary: bg-primary-600 hover:bg-primary-700 text-white rounded-btn
+- Outline: border-2 border-primary-600 text-primary-600 hover:bg-primary-50
+- Danger: bg-danger hover:bg-red-800 text-white
+
+### Badge Status
+- menunggu: bg-neutral-100 text-neutral-600
+- diverifikasi: bg-primary-50 text-primary-600
+- lulus: bg-accent/20 text-amber-700
+- ditolak: bg-danger-light text-danger
+
+### Input
+- Style: border border-neutral-300 bg-neutral-50 focus:ring-2 focus:ring-primary-600
+
+### Card
+- Style: bg-white rounded-card shadow-card border border-neutral-200
