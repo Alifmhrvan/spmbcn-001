@@ -26,7 +26,6 @@ export async function GET(request: NextRequest) {
          nama_lengkap,
          status,
          created_at,
-         profiles:user_id(nama),
          program_studi:program_studi_id(nama),
          jalur_pendaftaran:jalur_pendaftaran_id(id, nama)`,
         { count: "exact" }
@@ -66,7 +65,7 @@ export async function GET(request: NextRequest) {
       id: row.id,
       nomorPendaftaran: row.nomor_pendaftaran,
       namaLengkap: row.nama_lengkap,
-      email: row.profiles?.email ?? "",
+      email: "",
       programStudi: row.program_studi?.nama ?? "",
       jalur: row.jalur_pendaftaran?.nama ?? "",
       status: row.status,

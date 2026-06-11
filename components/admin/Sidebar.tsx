@@ -13,8 +13,7 @@ interface NavItem {
 
 const NAV_ITEMS: NavItem[] = [
   { href: "/admin/dashboard",  label: "Dashboard",          icon: LayoutDashboard },
-  { href: "/admin/peserta",    label: "Daftar Peserta",     icon: Users },
-  { href: "/admin/verifikasi", label: "Verifikasi Berkas",  icon: FileCheck },
+  { href: "/admin/peserta",    label: "Daftar Peserta",     icon: Users }, 
   { href: "/admin/pengaturan", label: "Pengaturan Jadwal",  icon: Settings },
 ];
 

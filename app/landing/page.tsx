@@ -88,17 +88,17 @@ const LandingPage = () => {
   const apiBase = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost/spmb-api";
 
   useEffect(() => {
-    fetch(`${apiBase}/api/publik/program-studi`)
-      .then((r) => r.json())
-      .then((j) => setPrograms(j.success && Array.isArray(j.data) ? j.data : []))
+    fetch(`/api/program-studi`)
+  .then((r) => r.json())
+  .then((j) => setPrograms(Array.isArray(j) ? j : []))
       .catch(() => setPrograms([]))
       .finally(() => setLoadingPrograms(false));
   }, [apiBase]);
 
   useEffect(() => {
-    fetch(`${apiBase}/api/publik/jalur`)
-      .then((r) => r.json())
-      .then((j) => setJalur(j.success && Array.isArray(j.data) ? j.data : []))
+    fetch(`/api/jalur-pendaftaran`)
+  .then((r) => r.json())
+  .then((j) => setJalur(Array.isArray(j) ? j : []))
       .catch(() => setJalur([]))
       .finally(() => setLoadingJalur(false));
   }, [apiBase]);

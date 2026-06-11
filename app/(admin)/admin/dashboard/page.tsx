@@ -1,4 +1,3 @@
-
 "use client";
 
 import StatCard from "@/components/admin/StatCard";
@@ -6,7 +5,6 @@ import { generateInitials } from "@/lib/utils";
 import api from "@/lib/api";
 import { useQuery } from "@tanstack/react-query";
 import {
-  Download,
   MoreHorizontal,
   TrendingUp,
   Users,
@@ -267,7 +265,7 @@ const topProdi = stats?.programStudi?.[0];
             </select>
           </SectionHeader>
 
-          <div className="mt-5 h-52">
+          <div className="mt-5 h-52 min-h-[208px]">
             {isLoading ? (
               <div className="h-full w-full animate-pulse rounded-lg bg-neutral-100" />
             ) : (
@@ -335,7 +333,7 @@ const topProdi = stats?.programStudi?.[0];
                     onClick={() => setActivityMenuOpen(false)}
                   />
                   <div className="absolute right-0 top-8 z-20 min-w-[130px] rounded-lg border border-neutral-200 bg-white py-1 shadow-card-hover text-sm">
-                    {["Tandai semua dibaca", "Export aktivitas"].map((item) => (
+                    {["Tandai semua dibaca"].map((item) => (
                       <button
                         key={item}
                         type="button"
@@ -391,13 +389,7 @@ const topProdi = stats?.programStudi?.[0];
                 })}
           </ul>
 
-          <button
-            type="button"
-            id="btn-view-all-activities"
-            className="mt-5 w-full rounded-btn border-2 border-neutral-200 py-2 text-xs font-semibold text-neutral-600 transition-colors hover:border-primary-300 hover:bg-primary-50 hover:text-primary-700"
-          >
-            Lihat Semua Aktivitas
-          </button>
+
         </section>
       </div>
 
@@ -406,16 +398,7 @@ const topProdi = stats?.programStudi?.[0];
         aria-label="Performa jalur penerimaan"
         className="rounded-card border border-neutral-200 bg-white p-5 shadow-card"
       >
-        <SectionHeader title="Performa Jalur Penerimaan">
-          <button
-            type="button"
-            id="btn-export-report"
-            className="flex items-center gap-1.5 rounded-btn bg-primary-600 px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-primary-700"
-          >
-            <Download className="h-3.5 w-3.5" aria-hidden="true" />
-            Export Report
-          </button>
-        </SectionHeader>
+        <SectionHeader title="Performa Jalur Penerimaan" />
 
         <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {isLoading

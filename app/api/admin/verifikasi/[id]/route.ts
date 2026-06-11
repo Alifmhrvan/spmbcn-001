@@ -30,7 +30,6 @@ export async function GET(
          catatan_admin,
          submitted_at,
          created_at,
-         profiles:user_id(nama, no_hp),
          program_studi:program_studi_id(id, kode, nama),
          jalur_pendaftaran:jalur_pendaftaran_id(id, nama, biaya),
          dokumen(id, jenis, nama_file, storage_path, ukuran, mime_type, status, catatan, uploaded_at)`
@@ -78,7 +77,7 @@ export async function GET(
       asalSekolah: row.asal_sekolah,
       alamat: row.alamat,
       noHp: row.no_hp ?? null,
-      email: row.profiles?.email ?? null,
+      email: null,
       status: row.status,
       catatanAdmin: row.catatan_admin ?? null,
       submittedAt: row.submitted_at ?? null,
