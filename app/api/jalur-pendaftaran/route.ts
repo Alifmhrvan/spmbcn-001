@@ -1,4 +1,3 @@
-
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase/admin";
 
@@ -17,8 +16,8 @@ export async function GET() {
       nama: r.nama,
       deskripsi: r.deskripsi ?? null,
       biaya: r.biaya,
-      tanggalMulai: r.tanggal_mulai,
-      tanggalSelesai: r.tanggal_selesai,
+      tanggal_buka: r.tanggal_mulai,
+      tanggal_tutup: r.tanggal_selesai,
       aktif: r.aktif,
     }));
 

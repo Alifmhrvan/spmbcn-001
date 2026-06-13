@@ -5,7 +5,7 @@ import Link from "next/link";
 import {
   ArrowRight, Code2, Palette, Briefcase, ShoppingBag,
   Building2, Network, ChevronUp, Search, Loader2,
-  Trophy, Clock, XCircle,
+  Trophy, Clock, XCircle, CheckCircle,
 } from "lucide-react";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
@@ -55,6 +55,14 @@ const formatRupiah = (n: number) =>
 
 const formatTanggal = (str: string) =>
   new Date(str).toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" });
+
+const STATUS_DISPLAY: Record<StatusResult["status"], { label: string; color: string; icon: "trophy" | "clock" | "check" | "x" }> = {
+  draft: { label: "Draft", color: "bg-neutral-100 border-neutral-200", icon: "clock" },
+  menunggu: { label: "Menunggu Verifikasi", color: "bg-amber-50 border-amber-200", icon: "clock" },
+  diverifikasi: { label: "Diterima", color: "bg-blue-50 border-blue-200", icon: "check" },
+  lulus: { label: "Lulus", color: "bg-primary-50 border-primary-200", icon: "trophy" },
+  ditolak: { label: "Ditolak", color: "bg-danger-light border-red-200", icon: "x" },
+};
 
 const getJalurStatus = (jalur: JalurPendaftaran) => {
   if (!jalur.aktif) return { label: "Ditutup", color: "bg-danger-light text-danger" };
@@ -115,7 +123,7 @@ const LandingPage = () => {
     setStatusResult(null);
     setStatusError("");
     try {
-      const res = await fetch(`${apiBase}/api/publik/cek-status?nomor=${encodeURIComponent(nomorCek.trim())}`);
+      const res = await fetch(`/api/publik/cek-status?nomor=${encodeURIComponent(nomorCek.trim())}`);
       const json = await res.json();
       if (json.success && json.data) setStatusResult(json.data);
       else setStatusError(json.message ?? "Nomor pendaftaran tidak ditemukan.");
@@ -325,28 +333,34 @@ const LandingPage = () => {
                 </div>
               )}
 
-              {statusResult && (
-                <div className={`mt-4 p-4 rounded-btn border ${statusResult.status === "lulus" ? "bg-primary-50 border-primary-200" : statusResult.status === "ditolak" ? "bg-danger-light border-red-200" : "bg-amber-50 border-amber-200"}`}>
-                  <div className="flex items-start gap-3">
-                    {statusResult.status === "lulus" ? (
-                      <Trophy size={20} className="text-primary-600 flex-shrink-0 mt-0.5" />
-                    ) : statusResult.status === "ditolak" ? (
-                      <XCircle size={20} className="text-danger flex-shrink-0 mt-0.5" />
-                    ) : (
-                      <Clock size={20} className="text-amber-600 flex-shrink-0 mt-0.5" />
-                    )}
-                    <div>
-                      <p className="text-sm font-bold text-neutral-900">{statusResult.nama}</p>
-                      <p className="text-xs text-neutral-500 mb-2">{statusResult.nomor_pendaftaran}</p>
-                      <div className="space-y-1 text-xs text-neutral-600">
-                        <p>Program: <span className="font-medium">{statusResult.program_studi}</span></p>
-                        <p>Jalur: <span className="font-medium">{statusResult.jalur}</span></p>
-                        <p>Status: <span className="font-semibold capitalize">{statusResult.status}</span></p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
+              {statusResult && (() => {
+  const display = STATUS_DISPLAY[statusResult.status];
+  const Icon = display.icon === "trophy" ? Trophy
+    : display.icon === "x" ? XCircle
+    : display.icon === "check" ? CheckCircle
+    : Clock;
+  const iconColor = statusResult.status === "lulus" ? "text-primary-600"
+    : statusResult.status === "ditolak" ? "text-danger"
+    : statusResult.status === "diverifikasi" ? "text-blue-600"
+    : "text-amber-600";
+
+  return (
+    <div className={`mt-4 p-4 rounded-btn border ${display.color}`}>
+      <div className="flex items-start gap-3">
+        <Icon size={20} className={`${iconColor} flex-shrink-0 mt-0.5`} />
+        <div>
+          <p className="text-sm font-bold text-neutral-900">{statusResult.nama}</p>
+          <p className="text-xs text-neutral-500 mb-2">{statusResult.nomor_pendaftaran}</p>
+          <div className="space-y-1 text-xs text-neutral-600">
+            <p>Program: <span className="font-medium">{statusResult.program_studi}</span></p>
+            <p>Jalur: <span className="font-medium">{statusResult.jalur}</span></p>
+            <p>Status: <span className="font-semibold">{display.label}</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+})()}
             </div>
           </div>
         </section>

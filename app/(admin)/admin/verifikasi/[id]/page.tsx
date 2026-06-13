@@ -95,7 +95,7 @@ function relativeTime(iso: string): string {
 
 const STATUS_LABEL: Record<StatusPendaftaran, string> = {
   menunggu:     "Menunggu",
-  diverifikasi: "Diverifikasi",
+  diverifikasi: "Diterima",
   lulus:        "Lulus",
   ditolak:      "Ditolak",
 };

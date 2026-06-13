@@ -46,7 +46,7 @@ const EMPTY_META = { total: 0, page: 1, limit: 10, totalPages: 0 };
 
 const STATUS_OPTS: { value: StatusFilter; label: string }[] = [
   { value: "semua",       label: "Semua"       },
-  { value: "diverifikasi",label: "Diverifikasi" },
+  { value: "diverifikasi",label: "Diterima" },
   { value: "lulus",       label: "Lulus"       },
   { value: "ditolak",     label: "Ditolak"     },
   { value: "menunggu",    label: "Menunggu"    },
@@ -54,7 +54,7 @@ const STATUS_OPTS: { value: StatusFilter; label: string }[] = [
 
 const STATUS_LABEL: Record<StatusFilter, string> = {
   semua:       "Semua",
-  diverifikasi:"Diverifikasi",
+  diverifikasi:"Diterima",
   lulus:       "Lulus",
   ditolak:     "Ditolak",
   menunggu:    "Menunggu",
